@@ -1,3 +1,4 @@
+import { compile } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -15,6 +16,21 @@ const routes = [
     path: "/forms",
     name: "Forms",
     component: () => import("../views/Forms.vue"),
+  },
+  {
+    path: "/layanan-kami",
+    name: "LayananKami",
+    component: () => import("../components/dashboard/Layanan.vue"),
+  },
+  {
+    path: "/mitra-kami",
+    name: "MitraKami",
+    component: () => import("../components/dashboard/Mitra.vue"),
+  },
+  {
+    path: "/produk-kami",
+    name: "ProdukKami",
+    component: () => import("../components/dashboard/Produk.vue"),
   },
 ];
 
