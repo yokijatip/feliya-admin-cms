@@ -32,6 +32,11 @@ const routes = [
     name: "ProdukKami",
     component: () => import("../views/dashboard/Produk.vue"),
   },
+  {
+    path: "/produk-kami/add",
+    name: "TambahKontenProduk",
+    component: () => import("../views/content/add/AddContentProduct.vue"),
+  },
 ];
 
 const router = createRouter({

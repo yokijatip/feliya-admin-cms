@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="fixed top-0 left-0 h-screen">
     <div
       class="bg-white text-black h-screen w-56 flex flex-col justify-between font-display p-4"
     >

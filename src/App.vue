@@ -9,7 +9,11 @@ import router from "./router";
     <SideBar v-if="$route.name !== 'Login'" />
 
     <!-- Main Content -->
-    <div class="flex-grow bg-gray-100">
+
+    <div
+      class="flex-grow bg-gray-100 min-h-screen w-full"
+      :class="{ 'ml-56': $route.name !== 'Login' }"
+    >
       <router-view></router-view>
     </div>
   </div>

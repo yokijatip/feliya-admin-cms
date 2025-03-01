@@ -1,6 +1,6 @@
 <template>
   <ContainerContentView>
-    <TopBarContent> Konten Produk </TopBarContent>
+    <TopBarContent addRoute="/produk-kami/add"> Konten Produk </TopBarContent>
     <div class="mt-4">
       <!-- Search and Filter -->
       <div class="mb-6 flex gap-4">
@@ -219,6 +219,14 @@ import ContainerContentView from "../../components/ContainerContentView.vue";
 import TopBarContent from "../../components/TopBarContent.vue";
 
 import { ref, computed } from "vue";
+
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const navigateToAddContentProduct = () => {
+  router.push({ name: "TambahKontenProduk" });
+};
 
 // Data konten (contoh data)
 const contents = ref([
