@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex items-center justify-between">
-    <h1 class="text-3xl font-semibold font-display text-gray-800">
+    <h1 class="text-2xl font-semibold font-display text-gray-800">
       <slot></slot>
     </h1>
 

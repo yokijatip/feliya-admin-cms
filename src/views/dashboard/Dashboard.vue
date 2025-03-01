@@ -1,7 +1,21 @@
 <script setup>
-import ContainerContentView from "../components/ContainerContentView.vue";
-import TopBar from "../components/TopBar.vue";
-import router from "../router";
+import ContainerContentView from "../../components/ContainerContentView.vue";
+import TopBar from "../../components/TopBar.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const navigateToLayananKami = () => {
+  router.push("/layanan-kami");
+};
+
+const navigateToProdukKami = () => {
+  router.push("/produk-kami");
+};
+
+const navigateToMitra = () => {
+  router.push("/mitra-kami");
+};
 </script>
 
 <template>
@@ -14,7 +28,10 @@ import router from "../router";
         <div class="grid grid-cols-3 gap-4">
           <!-- Content 1 Menu CMS -->
 
-          <router-link to="/dashboard/layanan">
+          <router-link
+            to="/dashboard/layanan-kami"
+            @click="navigateToLayananKami"
+          >
             <div
               class="bg-white rounded-lg shadow-md hover:bg-gray-100 active:bg-gray-200"
             >
@@ -23,7 +40,10 @@ import router from "../router";
             </div>
           </router-link>
 
-          <router-link to="/dashboard/produk">
+          <router-link
+            to="/dashboard/produk-kami"
+            @click="navigateToProdukKami"
+          >
             <div
               class="bg-white rounded-lg shadow-md hover:bg-gray-100 active:bg-gray-200"
             >
@@ -32,7 +52,7 @@ import router from "../router";
             </div>
           </router-link>
 
-          <router-link to="/dashboard/mitra">
+          <router-link to="/dashboard/mitra-kami" @click="navigateToMitra">
             <div
               class="bg-white rounded-lg shadow-md hover:bg-gray-100 active:bg-gray-200"
             >

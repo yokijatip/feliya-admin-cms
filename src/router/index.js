@@ -5,7 +5,7 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    component: () => import("../views/Dashboard.vue"),
+    component: () => import("../views/dashboard/Dashboard.vue"),
   },
   {
     path: "/login",
@@ -20,17 +20,17 @@ const routes = [
   {
     path: "/layanan-kami",
     name: "LayananKami",
-    component: () => import("../components/dashboard/Layanan.vue"),
+    component: () => import("../views/dashboard/Layanan.vue"),
   },
   {
     path: "/mitra-kami",
     name: "MitraKami",
-    component: () => import("../components/dashboard/Mitra.vue"),
+    component: () => import("../views/dashboard/Mitra.vue"),
   },
   {
     path: "/produk-kami",
     name: "ProdukKami",
-    component: () => import("../components/dashboard/Produk.vue"),
+    component: () => import("../views/dashboard/Produk.vue"),
   },
 ];
 

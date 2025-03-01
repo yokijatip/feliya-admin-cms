@@ -1,7 +1,7 @@
 <template>
   <section>
     <div
-      class="bg-white text-black h-screen w-64 flex flex-col justify-between font-display p-8"
+      class="bg-white text-black h-screen w-56 flex flex-col justify-between font-display p-4"
     >
       <!-- Logo dan Nama -->
       <div class="mb-8">
