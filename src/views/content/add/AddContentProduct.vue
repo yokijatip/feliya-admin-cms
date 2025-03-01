@@ -145,9 +145,6 @@ async function handleSubmit() {
   try {
     isSubmitting.value = true;
 
-    // Logging data yang akan dikirim
-    console.log("Data yang dikirim ke backend:", formData.value);
-
     // Kirim data ke backend
     const response = await apiClient.post("/content/add", formData.value);
 
