@@ -1,123 +1,86 @@
 <template>
   <ContainerContentView>
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold mb-6">
-        {{ isEditing ? "Edit Konten" : "Tambah Konten Baru" }}
-      </h2>
-
-      <form @submit.prevent="saveContent" class="space-y-6">
-        <!-- Judul -->
+    <h1 class="text-2xl font-bold mb-4">Tambah Konten Produk</h1>
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <form @submit.prevent="handleSubmit" class="space-y-4">
+        <!-- Input Judul -->
         <div>
-          <label
-            for="judul"
-            class="block text-sm font-medium text-gray-700 mb-1"
+          <label for="title" class="block text-sm font-medium text-gray-700"
             >Judul</label
           >
           <input
+            v-model="formData.title"
             type="text"
-            id="judul"
-            v-model="content.judul"
-            class="w-full px-4 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Masukkan judul konten"
-            required
+            id="title"
+            placeholder="Masukkan judul"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
 
-        <!-- Kategori -->
+        <!-- Input Kategori -->
         <div>
-          <label
-            for="kategori"
-            class="block text-sm font-medium text-gray-700 mb-1"
+          <label for="category" class="block text-sm font-medium text-gray-700"
             >Kategori</label
           >
           <select
-            id="kategori"
-            v-model="content.kategori"
-            class="w-full px-4 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
-            required
+            v-model="formData.category"
+            id="category"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="" disabled>Pilih kategori</option>
-            <option value="artikel">Artikel</option>
-            <option value="berita">Berita</option>
-            <option value="produk">Produk</option>
-            <option value="tips">Tips dan Trik</option>
-            <option value="tips">Other</option>
+            <option value="Artikel">Artikel</option>
+            <option value="Berita">Berita</option>
+            <option value="Produk">Produk</option>
+            <option value="Tips dan Trik">Tips dan Trik</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
-        <!-- Gambar -->
+        <!-- Input Gambar -->
         <div>
-          <label
-            for="gambar"
-            class="block text-sm font-medium text-gray-700 mb-1"
+          <label for="image" class="block text-sm font-medium text-gray-700"
             >Gambar</label
           >
-          <div class="flex items-center space-x-4">
-            <input
-              type="file"
-              id="gambar"
-              @change="handleImageUpload"
-              class="hidden"
-              accept="image/*"
-            />
-            <button
-              type="button"
-              @click="$refs.fileInput.click()"
-              class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-            >
-              Pilih Gambar
-            </button>
-            <span v-if="imagePreview" class="text-sm text-gray-500">{{
-              imageName
-            }}</span>
-            <input
-              type="file"
-              ref="fileInput"
-              class="hidden"
-              @change="handleImageUpload"
-              accept="image/*"
-            />
-          </div>
-          <div v-if="imagePreview" class="mt-3">
-            <img
-              :src="imagePreview"
-              alt="Preview"
-              class="h-40 object-contain rounded-md"
-            />
-          </div>
+          <input
+            type="file"
+            id="image"
+            @change="handleImageUpload"
+            class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+          />
+          <p v-if="imageName" class="mt-2 text-sm text-gray-500">
+            Nama Gambar: {{ imageName }}
+          </p>
         </div>
 
-        <!-- Konten Lengkap -->
+        <!-- Input Konten Lengkap -->
         <div>
-          <label
-            for="kontenLengkap"
-            class="block text-sm font-medium text-gray-700 mb-1"
+          <label for="content" class="block text-sm font-medium text-gray-700"
             >Konten Lengkap</label
           >
           <textarea
-            id="kontenLengkap"
-            v-model="content.kontenLengkap"
-            rows="10"
-            class="w-full px-4 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+            v-model="formData.content"
+            id="content"
+            rows="6"
             placeholder="Masukkan konten lengkap"
-            required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></textarea>
         </div>
 
-        <!-- Tombol Submit & Cancel -->
-        <div class="flex space-x-4">
-          <button
-            type="submit"
-            class="px-6 py-2 bg-blue-950 text-white rounded-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-900"
-          >
-            {{ isEditing ? "Update Konten" : "Simpan Konten" }}
-          </button>
+        <!-- Tombol Batal dan Simpan -->
+        <div class="flex justify-between">
           <button
             type="button"
-            @click="cancelForm"
-            class="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            @click="resetForm"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
             Batal
+          </button>
+          <button
+            type="submit"
+            :disabled="isSubmitting"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            {{ isSubmitting ? "Menyimpan..." : "Simpan" }}
           </button>
         </div>
       </form>
@@ -131,77 +94,86 @@ import ContainerContentView from "../../../components/ContainerContentView.vue";
 import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useContentStore } from "../../../store/contentStore";
-
-const router = useRouter();
-const route = useRoute();
-const contentStore = useContentStore();
-
-// Check if we're editing existing content
-const contentId = route.params.id;
-const isEditing = computed(() => !!contentId);
+import { uploadImageToCloudinary } from "../../../services/cloudinaryService";
+import apiClient from "../../../services/axiosInstance";
 
 // Content form data
-const content = ref({
-  judul: "",
-  kategori: "",
-  kontenLengkap: "",
-  gambar: null,
+const formData = ref({
+  title: "",
+  category: "",
+  image: "",
+  content: "",
 });
 
-// Image handling
-const imagePreview = ref(null);
+// State tambahan
 const imageName = ref("");
-
-// Load content data if editing
-onMounted(async () => {
-  if (isEditing.value) {
-    try {
-      const contentData = await contentStore.getContentById(contentId);
-      if (contentData) {
-        content.value = { ...contentData };
-        if (contentData.gambar) {
-          imagePreview.value = contentData.gambar;
-          imageName.value = "Current image";
-        }
-      }
-    } catch (error) {
-      console.error("Failed to load content:", error);
-      // Handle error (show notification, etc.)
-    }
-  }
-});
+const isSubmitting = ref(false);
+const router = useRouter();
+const contentStore = useContentStore();
 
 // Handle image upload
-const handleImageUpload = (event) => {
+async function handleImageUpload(event) {
   const file = event.target.files[0];
-  if (file) {
-    imageName.value = file.name;
-    content.value.gambar = file;
-
-    // Generate preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreview.value = e.target.result;
-    };
-    reader.readAsDataURL(file);
+  if (!file) {
+    alert("Tidak ada file yang dipilih.");
+    return;
   }
-};
 
-// Save content
-const saveContent = async () => {
+  console.log("File terpilih:", file);
+
   try {
-    if (isEditing.value) {
-      await contentStore.updateContent(contentId, content.value);
-    } else {
-      await contentStore.addContent(content.value);
-    }
-    // Redirect to content list after successful save
+    const imageUrl = await uploadImageToCloudinary(file);
+    formData.value.image = imageUrl;
+    imageName.value = file.name;
+  } catch (error) {
+    alert("Gagal mengupload gambar. Silakan coba lagi.");
+  }
+}
+
+// Handle Submit Form
+async function handleSubmit() {
+  if (
+    !formData.value.title ||
+    !formData.value.category ||
+    !formData.value.image ||
+    !formData.value.content
+  ) {
+    alert("Harap lengkapi semua field.");
+    return;
+  }
+
+  try {
+    isSubmitting.value = true;
+
+    // Logging data yang akan dikirim
+    console.log("Data yang dikirim ke backend:", formData.value);
+
+    // Kirim data ke backend
+    const response = await apiClient.post("/content/add", formData.value);
+
+    // Logging respons dari backend
+    console.log("Konten berhasil ditambahkan:", response.data);
+
+    // Redirect ke halaman dashboard setelah berhasil
     router.push("/produk-kami");
   } catch (error) {
-    console.error("Failed to save content:", error);
-    // Handle error (show notification, etc.)
+    console.error("Error saat menambahkan konten:", error);
+    alert("Gagal menambahkan konten. Silakan coba lagi.");
+  } finally {
+    isSubmitting.value = false;
   }
-};
+}
+
+// Reset form
+function resetForm() {
+  formData.value = {
+    title: "",
+    category: "",
+    image: "",
+    content: "",
+  };
+  imageName.value = "";
+}
 
 // Cancel form
 const cancelForm = () => {
