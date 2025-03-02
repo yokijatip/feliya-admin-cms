@@ -35,5 +35,16 @@ export const useContentStore = defineStore("content", {
         throw error;
       }
     },
+
+    // Fungsi untuk menghapus konten berdasarkan ID
+    async deleteContent(contentId) {
+      try {
+        const response = await apiClient.delete(`/content/delete/${contentId}`);
+        return response.data; // Kembalikan data dari API
+      } catch (error) {
+        console.error("Error deleting content:", error);
+        throw error; // Throw error bray tong poho meh apal error na
+      }
+    },
   },
 });

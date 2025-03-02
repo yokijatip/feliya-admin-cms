@@ -1,14 +1,21 @@
+<script setup>
+import ContainerContentView from "../../components/ContainerContentView.vue";
+import TopBarContent from "../../components/TopBarContent.vue";
+</script>
+
 <template>
   <ContainerContentView>
-    <TopBarContent> Konten Layanan </TopBarContent>
-    <div class="mt-4">
+    <TopBarContent addRoute="/forms">Konten Layanan</TopBarContent>
+
+    <!-- Table Content -->
+    <div class="mt-6">
       <!-- Search and Filter -->
       <div class="mb-6 flex gap-4">
-        <div class="relative flex-grow">
+        <div class="relative flex-grow bg-white shadow-sm rounded-lg">
           <input
             type="text"
             placeholder="Cari konten..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             v-model="searchQuery"
           />
           <span class="absolute right-3 top-2.5 text-gray-400">
@@ -27,13 +34,13 @@
           </span>
         </div>
         <select
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="px-4 py-2 border border-gray-300 bg-white rounded-lg focus:border-blue-900"
           v-model="filterCategory"
         >
           <option value="">Semua Kategori</option>
-          <option value="artikel">Artikel</option>
-          <option value="berita">Berita</option>
-          <option value="produk">Produk</option>
+          <option value="Layanan">Layanan</option>
+          <option value="Produk">Produk</option>
+          <option value="Mitra">Mitra</option>
         </select>
       </div>
 
@@ -147,11 +154,7 @@
       </div>
 
       <!-- Pagination -->
-      <div class="flex justify-between items-center mt-6">
-        <div class="text-sm text-gray-500">
-          Menampilkan {{ filteredContent.length }} dari
-          {{ contents.length }} konten
-        </div>
+      <div class="flex justify-end items-center mt-6">
         <div class="flex space-x-2">
           <button
             class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50"
@@ -184,7 +187,7 @@
       <!-- Delete Confirmation Modal -->
       <div
         v-if="showDeleteModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        class="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50"
       >
         <div class="bg-white p-6 rounded-lg w-96 shadow-xl">
           <h3 class="text-lg font-medium text-gray-900 mb-4">
@@ -196,7 +199,7 @@
           </p>
           <div class="flex justify-end space-x-3">
             <button
-              @click="showDeleteModal = false"
+              @click="cancelDelete"
               class="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50"
             >
               Batal
@@ -213,101 +216,5 @@
     </div>
   </ContainerContentView>
 </template>
-
-<script setup>
-import ContainerContentView from "../../components/ContainerContentView.vue";
-import TopBarContent from "../../components/TopBarContent.vue";
-
-import { ref, computed } from "vue";
-
-// Data konten (contoh data)
-const contents = ref([
-  {
-    id: 1,
-    image:
-      "https://www.hubspot.com/hs-fs/hubfs/parts-url_1.webp?width=595&name=parts-url_1.webp",
-    title: "Artikel Pertama",
-    category: "artikel",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: 2,
-    image: "https://via.placeholder.com/300x200",
-    title: "Berita Terbaru",
-    category: "berita",
-    description:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  },
-  {
-    id: 3,
-    image: "https://via.placeholder.com/300x200",
-    title: "Produk Unggulan",
-    category: "produk",
-    description:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-  },
-  {
-    id: 4,
-    image: "https://via.placeholder.com/300x200",
-    title: "Tips dan Trik",
-    category: "artikel",
-    description:
-      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-]);
-
-// Search dan filter
-const searchQuery = ref("");
-const filterCategory = ref("");
-
-// Filter konten berdasarkan pencarian dan kategori
-const filteredContent = computed(() => {
-  return contents.value.filter((item) => {
-    const matchQuery =
-      item.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.value.toLowerCase());
-
-    const matchCategory =
-      filterCategory.value === "" || item.category === filterCategory.value;
-
-    return matchQuery && matchCategory;
-  });
-});
-
-// Modal konfirmasi hapus
-const showDeleteModal = ref(false);
-const contentToDelete = ref(null);
-
-// Fungsi untuk mengedit konten
-const editContent = (id) => {
-  // Implementasi navigasi ke halaman edit atau tampilkan modal edit
-  console.log("Edit content with ID:", id);
-};
-
-// Fungsi untuk menghapus konten
-const deleteContent = (id) => {
-  contentToDelete.value = id;
-  showDeleteModal.value = true;
-};
-
-// Konfirmasi hapus
-const confirmDelete = () => {
-  // Implementasi hapus konten
-  console.log("Deleting content with ID:", contentToDelete.value);
-
-  // Menghapus dari array
-  const index = contents.value.findIndex(
-    (item) => item.id === contentToDelete.value
-  );
-  if (index !== -1) {
-    contents.value.splice(index, 1);
-  }
-
-  // Tutup modal
-  showDeleteModal.value = false;
-  contentToDelete.value = null;
-};
-</script>
 
 <style></style>
